@@ -36,7 +36,7 @@ return {
                     vim.api.nvim_create_autocmd('BufWritePre', {
                         group = augroup,
                         buffer = bufnr,
-                        calback = function()
+                        callback = function()
                             vim.lsp.buf.format { async = false }
                         end
                     })

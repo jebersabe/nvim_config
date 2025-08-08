@@ -162,11 +162,37 @@ return {
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
-      ruff = {},
+      -- For better Python development, use pyright as the main LSP
+      -- and configure ruff for linting/formatting
+      pyright = {
+        settings = {
+          python = {
+            analysis = {
+              typeCheckingMode = "basic",
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              autoImportCompletions = true,
+              diagnosticMode = "workspace",
+              stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs",
+            },
+          },
+        },
+      },
+      ruff = {
+        init_options = {
+          settings = {
+            args = {
+              "--line-length=88",
+              "--select=E,W,F,I,N,UP,YTT,ANN,S,BLE,B,A,COM,C4,DTZ,EM,EXE,ISC,ICN,G,PIE,T20,PYI,PT,Q,RSE,RET,SLF,SIM,TID,TCH,ARG,PTH,PD,PGH,PL,TRY,NPY,RUF",
+            },
+          },
+        },
+      },
       pylsp = {
         settings = {
           pylsp = {
             plugins = {
+              -- Disable everything since we're using pyright and ruff
               pyflakes = { enabled = false },
               pycodestyle = { enabled = false },
               autopep8 = { enabled = false },
@@ -175,6 +201,8 @@ return {
               pylsp_mypy = { enabled = false },
               pylsp_black = { enabled = false },
               pylsp_isort = { enabled = false },
+              rope_autoimport = { enabled = false },
+              rope_completion = { enabled = false },
             },
           },
         },
@@ -227,6 +255,10 @@ return {
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format Lua code
+      'black',  -- Python formatter
+      'isort',  -- Python import sorter
+      'mypy',   -- Python type checker
+      'debugpy', -- Python debugger
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

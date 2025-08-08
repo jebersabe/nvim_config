@@ -12,6 +12,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end
 vim.opt.rtp:prepend(lazypath)
+vim.o.termguicolors = true
 
 require('lazy').setup({
 	require "plugins.neotree",
@@ -30,4 +31,9 @@ require('lazy').setup({
     require "plugins.markdown",
     require "plugins.hlsearch",
     require "plugins.lazygit",
+    -- Python-specific plugins
+    require "plugins.dap",
+    require "plugins.testing",
+    require "plugins.python-utils",
+    require "plugins.python-snippets",
 })
