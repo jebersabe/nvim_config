@@ -28,7 +28,7 @@ require('lazy').setup({
     require "plugins.gitsigns",
     require "plugins.alpha",
     require "plugins.autoclose",
-    require "plugins.markdown",
+    -- require "plugins.markdown",
     require "plugins.hlsearch",
     require "plugins.lazygit",
     -- Python-specific plugins
